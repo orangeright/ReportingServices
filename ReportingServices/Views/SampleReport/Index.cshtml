@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+test
+
+@section scripts {
+<script type="text/javascript">
+<!--
+    $(function () {
+        $.getJSON("../App_Data/data.json", function (data) {
+            var len = data.length;
+            alert("sss");
+            for (var i = 0; i < len; i++) {
+                $("#demo").append($("<li>").attr({ "id": data[i].id }).text(data[i].name));
+            }
+        });
+    });
+//-->
+</script>
+}
+
+<ul id="demo"></ul>
