@@ -24,11 +24,12 @@ namespace ReportingServices.Controllers
         //};
 
         private string baseUri = "http://localhost/pleasanter/api_items/98/get";
-        private Hashtable param = new Hashtable
-        {
-            ["ApiKey"] = "40a398c2c4ab22bda378b3650f6cb7ea72eeafa789dd9ef7c4dcbc3f056052db8e0d08c49d0efd3f5d028da5f5b7f36788d5836bc50783f5b1a1844124434496"
-        };
-
+        //private Hashtable param = new Hashtable
+        //{
+        //    ["ApiKey"] = "40a398c2c4ab22bda378b3650f6cb7ea72eeafa789dd9ef7c4dcbc3f056052db8e0d08c49d0efd3f5d028da5f5b7f36788d5836bc50783f5b1a1844124434496"
+        //};
+        private Dictionary<string, string> param = new Dictionary<string, string>();
+        
 
         // GET: SampleReport
         public async Task<ActionResult> Index()
@@ -54,17 +55,18 @@ namespace ReportingServices.Controllers
             string uri = baseUri;
             using (HttpClient httpClient = new HttpClient())
             {
+                param["ApiKey"] = "40a398c2c4ab22bda378b3650f6cb7ea72eeafa789dd9ef7c4dcbc3f056052db8e0d08c49d0efd3f5d028da5f5b7f36788d5836bc50783f5b1a1844124434496";
+                var json = new JavaScriptSerializer().Serialize(param);
 
-                //var json = new JavaScriptSerializer().Serialize(param);
-
-                var json = "{ \"ApiKey\" : \"40a398c2c4ab22bda378b3650f6cb7ea72eeafa789dd9ef7c4dcbc3f056052db8e0d08c49d0efd3f5d028da5f5b7f36788d5836bc50783f5b1a1844124434496\"  }";
-
+                //var json = "{\"ApiKey\":\"40a398c2c4ab22bda378b3650f6cb7ea72eeafa789dd9ef7c4dcbc3f056052db8e0d08c49d0efd3f5d028da5f5b7f36788d5836bc50783f5b1a1844124434496\"}";
                 using (var client = new HttpClient())
                 {
+                    var content = new StringContent(json, Encoding.UTF8, "application/x-www-form-urlencoded");
                     //var content = new StringContent(json, Encoding.UTF8, "application/json");
-                    var content = new StringContent(json, Encoding.UTF8);
+                    //var content = new StringContent(json, Encoding.GetEncoding("utf-8"));
 
-                    var response =  await client.PostAsync(uri, content);
+                    var response = await client.PostAsync(uri, content);
+
                     Debug.WriteLine("No1");
                     Debug.WriteLine(response);
                     var result = await response.Content.ReadAsStringAsync();

@@ -8,23 +8,54 @@
 test
 
 @section scripts {
-<script type="text/javascript">
+    <script type="text/javascript">
 <!--
-    $(function () {
-        $.getJSON("../App_Data/data.json", function (data) {
-            var len = data.length;
-            alert("sss");
-            for (var i = 0; i < len; i++) {
-                $("#demo").append($("<li>").attr({ "id": data[i].id }).text(data[i].name));
-            }
-        });
-    });
-//-->
-</script>
+        $("button#update").click(function () {
+            // 多重送信を防ぐため通信完了までボタンをdisableにする
+            var button = $(this);
+            button.attr("disabled", true);
+
+            // 各フィールドから値を取得してJSONデータを作成
+            var data = {
+                ApiKey: "40a398c2c4ab22bda378b3650f6cb7ea72eeafa789dd9ef7c4dcbc3f056052db8e0d08c49d0efd3f5d028da5f5b7f36788d5836bc50783f5b1a1844124434496"
+            };
+
+            // 通信実行
+            $.ajax({
+                type: "post",                // method = "POST"
+                url: "http://localhost/pleasanter/api_items/98/get",        // POST送信先のURL
+                data: JSON.stringify(data),  // JSONデータ本体
+                contentType: 'application/json', // リクエストの Content-Type
+                dataType: "json",           // レスポンスをJSONとしてパースする
+                success: function (json_data) {   // 200 OK時
+                    // JSON Arrayの先頭が成功フラグ、失敗の場合2番目がエラーメッセージ
+                    if (!json_data[0]) {    // サーバが失敗を返した場合
+                        alert("Transaction error. " + json_data[1]);
+                        return;
+                    }
+                    // 成功時処理
+                    $("#te").text(json_data);
+                    location.reload();
+                },
+                error: function () {         // HTTPエラー時
+                    alert("Server Error. Pleasy try again later.");
+                },
+                complete: function () {      // 成功・失敗に関わらず通信が終了した際の処理
+                    button.attr("disabled", false);  // ボタンを再び enableにする
+                }
+            });
+        });//-->
+    </script>
 }
 
 <p>
-  @ViewBag.Result
+    @ViewBag.Result
 </p>
 
-<ul id="demo"></ul>
+<div class="control-group">
+    <div class="controls">
+        <button id="update" type="button">更新</button>
+    </div>
+</div>
+
+<div id="te"></div>
