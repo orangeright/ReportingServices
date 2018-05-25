@@ -1,43 +1,19 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
-namespace ReportingServices
+
+namespace ReportingServices.Libraries
 {
-    public class SampleReportController : Controller
+    public static class ApiUtilities
     {
-
-        // GET: SampleReport
-        public async Task<ActionResult> Index()
-        {
-            ViewBag.Result = await GetByIDforAPI();
-            //ViewBag.Result = GetByIDforAPI2();
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Print()
-        {
-            string result = await GetByIDforAPI();
-            Debug.WriteLine("No3");
-            Debug.WriteLine(result);
-
-            return View();
-
-        }
-
-        private async Task<string> GetByIDforAPI(string id = "98")
+        public static async Task<string> GetByIDforAPI(string id)
         {
             string uri = Parameters.Pleasanter.Uri.Replace("{id}", id);
             Dictionary<string, string> param = new Dictionary<string, string>()
@@ -61,5 +37,4 @@ namespace ReportingServices
             }
         }
     }
-
 }

@@ -3,9 +3,12 @@ using System.IO;
 using System.Text;
 using System.Web;
 
+using ReportingServices.Controllers;
+using System.Collections.Generic;
+
 namespace ReportingServices
 {
-    public static class Initializer
+    public class Initializer
     {
         public static void Initialize()
         {
@@ -17,6 +20,15 @@ namespace ReportingServices
             }
             Parameters.Pleasanter = JsonConvert.DeserializeObject<Pleasanter>(json);
 
+            Parameters.Pleasanter.TemplatePath = Path.Combine(HttpContext.Current.Server.MapPath("./"), "App_Data/Template", "template.xlsx");
+
+            //path = Path.Combine(HttpContext.Current.Server.MapPath("./"), "App_Data", "testdata.json");
+            //using (var reader = new StreamReader(path, Encoding.GetEncoding("utf-8")))
+            //{
+            //    json = reader.ReadToEnd();
+            //}
+
+            //JsonData.Jdata = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
         }
     }
 }
