@@ -22,8 +22,9 @@ namespace ReportingServices.Libraries
                 {
                     foreach (KeyValuePair<string, string> kvp in data)
                     {
-                        if (cell.Value.ToString().StartsWith("{{" + kvp.Key + "}}"))
-                            cell.Value = cell.Value.ToString().Replace(kvp.Key, kvp.Value);
+
+                        if (cell.Value.ToString().Contains("{{" + kvp.Key + "}}"))
+                            cell.Value = cell.Value.ToString().Replace("{{" + kvp.Key + "}}", kvp.Value);
                     }
                 }
                 workBook.SaveAs(stream);
