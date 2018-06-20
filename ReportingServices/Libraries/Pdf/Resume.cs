@@ -1,69 +1,16 @@
-﻿using System;
-using System.Collections;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
 
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using Newtonsoft.Json;
-
-using ReportingServices.Libraries;
-
-namespace ReportingServices.Controllers
+namespace ReportingServices.Libraries
 {
-    public class ResumePrintController : Controller
+    public static class Resume
     {
-
-        // GET: ResumePrint
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult Pdfs()
-        {
-            var testdata = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonData.Jdata);
-
-            var pdf = CreatePdf(testdata);
-            return new FileStreamResult(pdf, "application/pdf");
-            //return File(pdf, "application/pdf", "result.pdf");
-        }
-
-        public async Task<ActionResult> Pdf(string id)
-        {
-            string result = await ApiUtilities.GetByIDforAPI(id);
-            var jsondata = JsonConvert.DeserializeObject<GetApiModel>(result);
-            var data = jsondata.Response.Data[0];
-            data.Add("PrintDate", DateTime.Now.ToLongDateString());
-            var pdf = CreatePdf(data);
-            return new FileStreamResult(pdf, "application/pdf");
-        }
-
-        public async Task<ActionResult> Excel(string id)
-        {
-            string result = await ApiUtilities.GetByIDforAPI(id);
-            var jsondata = JsonConvert.DeserializeObject<GetApiModel>(result);
-            var data = jsondata.Response.Data[0];
-            data.Add("PrintDate", DateTime.Now.ToLongDateString());
-            var xlsx = Reports.CreateXls(data);
-            //return new FileStreamResult(pdf, "application/pdf");
-            return File(xlsx, "application / vnd.openxmlformats - officedocument.spreadsheetml.sheet", "result.xlsx");
-        }
-
-
-        //[HttpPost]
-        //public ActionResult Pdf(string json)
-        //{
-        //    var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-        //    var pdf = CreatePdf(data);
-        //    return new FileStreamResult(pdf, "application/pdf");
-        //}
-
-        public MemoryStream CreatePdf(Dictionary<string, string> data)
+        public static MemoryStream Create(Dictionary<string, string> data)
         {
             var doc = new Document(PageSize.A4);
             var stream = new MemoryStream();
@@ -757,7 +704,7 @@ namespace ReportingServices.Controllers
         }
 
 
-        private void CellStyling(PdfPCell pdfPCell)
+        private static void CellStyling(PdfPCell pdfPCell)
         {
             pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;

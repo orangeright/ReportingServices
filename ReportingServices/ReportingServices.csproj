@@ -58,6 +58,13 @@
     <Reference Include="FastMember.Signed, Version=1.3.0.0, Culture=neutral, PublicKeyToken=9e8f22703bef9a29, processorArchitecture=MSIL">
       <HintPath>..\packages\FastMember.Signed.1.3.0\lib\net45\FastMember.Signed.dll</HintPath>
     </Reference>
+    <Reference Include="Implem.Libraries, Version=0.0.0.37658, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\inetpub\wwwroot\pleasanter\bin\Implem.Libraries.dll</HintPath>
+    </Reference>
+    <Reference Include="Implem.Pleasanter">
+      <HintPath>..\..\..\inetpub\wwwroot\pleasanter\bin\Implem.Pleasanter.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
     </Reference>
@@ -165,11 +172,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ResumePrintController.cs" />
+    <Compile Include="Controllers\PrintController.cs" />
     <Compile Include="Controllers\SampleReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Libraries\DbAccess.cs" />
+    <Compile Include="Libraries\Pdf\Resume.cs" />
     <Compile Include="Libraries\Reports.cs" />
     <Compile Include="Libraries\ResponseApiModel.cs" />
     <Compile Include="Libraries\GetApiModel.cs" />
@@ -194,6 +203,7 @@
     <Content Include="App_Data\ParamPleasanter.json" />
     <Content Include="App_Data\testdata.json" />
     <Content Include="App_Data\Template\template.xlsx" />
+    <Content Include="App_Data\Template\Resume.xlsx" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

@@ -14,8 +14,12 @@ namespace ReportingServices.Libraries
     public class Response
     {
         public List<Dictionary<string, string>> Data { get; set; }
-        //public List<Datum> Data { get; set; }
     }
 
-
+    public class Attachments
+    {
+        public string Guid { get; set; }
+        public string Name { get; set; }
+        public int Size { get; set; }
+    }
 }

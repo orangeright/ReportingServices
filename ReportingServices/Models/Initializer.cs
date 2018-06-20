@@ -20,7 +20,7 @@ namespace ReportingServices
             }
             Parameters.Pleasanter = JsonConvert.DeserializeObject<Pleasanter>(json);
 
-            Parameters.Pleasanter.TemplatePath = Path.Combine(HttpContext.Current.Server.MapPath("./"), "App_Data/Template", "template.xlsx");
+            Parameters.Pleasanter.TemplatePath = Path.Combine(HttpContext.Current.Server.MapPath("./"), "App_Data/Template/");
 
             //path = Path.Combine(HttpContext.Current.Server.MapPath("./"), "App_Data", "testdata.json");
             //using (var reader = new StreamReader(path, Encoding.GetEncoding("utf-8")))
